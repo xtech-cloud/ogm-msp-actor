@@ -27,7 +27,7 @@ message DomainCreateRequest
 // 删除的请求
 message DomainDeleteRequest
 {
-    string name = 1; // 域的名称
+    string uuid = 1; // 域的uuid
 }
 
 // 列举的回复
@@ -40,7 +40,7 @@ message DomainListResponse
 // 执行的请求
 message DomainExecuteRequest
 {
-    string domain = 1;          // 域的名称
+    string uuid = 1;            // 域的uuid
     string command = 2;         // 指令
     repeated string device = 3; // 设备ID
     string parameter = 4;       // 参数(base64编码的json格式)

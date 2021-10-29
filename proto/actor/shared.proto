@@ -28,8 +28,15 @@ message ListRequest
     string count = 2;  // 数量
 }
 
-// 设备信息
-message DeviceInfo
+// 域实体
+message DomainEntity
+{
+    string uuid = 1; // uuid
+    string name = 2; // 域的名称
+}
+
+// 设备实体
+message DeviceEntity
 {
     string serialNumber = 1;           // 序列号
     string name = 2;                   // 设备名称

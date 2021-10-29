@@ -33,7 +33,8 @@ message DomainDeleteRequest
 // 列举的回复
 message DomainListResponse
 {
-    Status status = 1; // 状态
+    Status status = 1;                // 状态
+    repeated DomainEntity domain = 2; //域实体
 }
 
 // 执行的请求

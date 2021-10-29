@@ -18,7 +18,7 @@ service Sync
 message SyncPushRequest
 {
     string domain = 1;                // 域的名称
-    DeviceInfo deviceInfo = 2;        // 设备信息
+    DeviceEntity device = 2;          // 设备实体
     map<string, string> property = 3; // 属性
 }
 

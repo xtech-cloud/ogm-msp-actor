@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-//package account;
+package actor;
 option go_package = "proto/actor;actor";
 
 // 状态

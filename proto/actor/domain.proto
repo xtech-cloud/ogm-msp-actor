@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "proto/actor/shared.proto";
 
-//package actor;
+package actor;
 option go_package = "proto/actor;actor";
 
 // 域

@@ -21,13 +21,6 @@ message BlankResponse
     Status status = 1; // 请求状态
 }
 
-// 键值对
-message KV
-{
-    string key = 1;   // 键
-    string value = 2; // 值
-}
-
 // 列举的请求
 message ListRequest
 {
@@ -45,18 +38,18 @@ message DomainEntity
 // 设备实体
 message DeviceEntity
 {
-    string serialNumber = 1;     // 序列号
-    string name = 2;             // 设备名称
-    string operatingSystem = 10; // 操作系统
-    string systemVersion = 11;   // 系统版本
-    string shape = 20;           // 形态
-    int32 battery = 21;          // 电量
-    int32 volume = 22;           // 音量
-    int32 brightness = 23;       // 亮度
-    string storage = 30;         // 存储
-    int64 storageBlocks = 31;    // 数据目录所在的存储的容量
-    int64 storageAvailable = 32; // 数据目录所在的存储的剩余
-    string network = 40;         // 网络
-    int32 networkStrength = 41;  // 网络信号强度
-    repeated KV program = 101;   // 程序信息<程序名，程序版本>
+    string serialNumber = 1;           // 序列号
+    string name = 2;                   // 设备名称
+    string operatingSystem = 10;       // 操作系统
+    string systemVersion = 11;         // 系统版本
+    string shape = 20;                 // 形态
+    int32 battery = 21;                // 电量
+    int32 volume = 22;                 // 音量
+    int32 brightness = 23;             // 亮度
+    string storage = 30;               // 存储
+    int64 storageBlocks = 31;          // 数据目录所在的存储的容量
+    int64 storageAvailable = 32;       // 数据目录所在的存储的剩余
+    string network = 40;               // 网络
+    int32 networkStrength = 41;        // 网络信号强度
+    map<string, string> program = 101; // 程序信息<程序名，程序版本>
 }

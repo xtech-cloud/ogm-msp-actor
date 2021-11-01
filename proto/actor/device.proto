@@ -17,5 +17,5 @@ message DeviceListResponse
 {
     Status status = 1;                // 状态
     int64 total = 2;                  // 总数
-    repeated DeviceEntity domain = 3; // 设备实体
+    repeated DeviceEntity device = 3; // 设备实体
 }

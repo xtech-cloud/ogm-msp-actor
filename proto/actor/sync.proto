@@ -17,7 +17,7 @@ service Sync
 // 推送的请求
 message SyncPushRequest
 {
-    string domain = 1;                // 域的名称
+    string domain = 1;                // 域的UUID
     DeviceEntity device = 2;          // 设备实体
     map<string, string> upProperty = 3; // 上行属性（提交给服务的属性）
     map<string, string> downProperty = 4; // 下行属性（希望在服务在回复包含的属性）

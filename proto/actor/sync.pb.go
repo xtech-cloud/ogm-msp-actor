@@ -26,7 +26,7 @@ type SyncPushRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Domain       string            `protobuf:"bytes,1,opt,name=domain,proto3" json:"domain,omitempty"`                                                                                                     // 域的名称
+	Domain       string            `protobuf:"bytes,1,opt,name=domain,proto3" json:"domain,omitempty"`                                                                                                     // 域的UUID
 	Device       *DeviceEntity     `protobuf:"bytes,2,opt,name=device,proto3" json:"device,omitempty"`                                                                                                     // 设备实体
 	UpProperty   map[string]string `protobuf:"bytes,3,rep,name=upProperty,proto3" json:"upProperty,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`     // 上行属性（提交给服务的属性）
 	DownProperty map[string]string `protobuf:"bytes,4,rep,name=downProperty,proto3" json:"downProperty,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"` // 下行属性（希望在服务在回复包含的属性）

@@ -9,11 +9,11 @@ option go_package = "proto/actor;actor";
 service Device
 {
     // 列举
-    rpc List(ListRequest) returns (DomainListResponse) { }
+    rpc List(ListRequest) returns (DeviceListResponse) { }
 }
 
 // 列举的回复
-message DomainListResponse
+message DeviceListResponse
 {
     Status status = 1;                // 状态
     int64 total = 2;                  // 总数

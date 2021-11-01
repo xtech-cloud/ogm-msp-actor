@@ -37,7 +37,7 @@ func NewDeviceEndpoints() []*api.Endpoint {
 
 type DeviceService interface {
 	// 列举
-	List(ctx context.Context, in *ListRequest, opts ...client.CallOption) (*DomainListResponse, error)
+	List(ctx context.Context, in *ListRequest, opts ...client.CallOption) (*DeviceListResponse, error)
 }
 
 type deviceService struct {
@@ -52,9 +52,9 @@ func NewDeviceService(name string, c client.Client) DeviceService {
 	}
 }
 
-func (c *deviceService) List(ctx context.Context, in *ListRequest, opts ...client.CallOption) (*DomainListResponse, error) {
+func (c *deviceService) List(ctx context.Context, in *ListRequest, opts ...client.CallOption) (*DeviceListResponse, error) {
 	req := c.c.NewRequest(c.name, "Device.List", in)
-	out := new(DomainListResponse)
+	out := new(DeviceListResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -66,12 +66,12 @@ func (c *deviceService) List(ctx context.Context, in *ListRequest, opts ...clien
 
 type DeviceHandler interface {
 	// 列举
-	List(context.Context, *ListRequest, *DomainListResponse) error
+	List(context.Context, *ListRequest, *DeviceListResponse) error
 }
 
 func RegisterDeviceHandler(s server.Server, hdlr DeviceHandler, opts ...server.HandlerOption) error {
 	type device interface {
-		List(ctx context.Context, in *ListRequest, out *DomainListResponse) error
+		List(ctx context.Context, in *ListRequest, out *DeviceListResponse) error
 	}
 	type Device struct {
 		device
@@ -84,6 +84,6 @@ type deviceHandler struct {
 	DeviceHandler
 }
 
-func (h *deviceHandler) List(ctx context.Context, in *ListRequest, out *DomainListResponse) error {
+func (h *deviceHandler) List(ctx context.Context, in *ListRequest, out *DeviceListResponse) error {
 	return h.DeviceHandler.List(ctx, in, out)
 }

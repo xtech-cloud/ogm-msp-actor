@@ -21,7 +21,7 @@ const (
 )
 
 // 列举的回复
-type DomainListResponse struct {
+type DeviceListResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -31,8 +31,8 @@ type DomainListResponse struct {
 	Domain []*DeviceEntity `protobuf:"bytes,3,rep,name=domain,proto3" json:"domain,omitempty"` // 设备实体
 }
 
-func (x *DomainListResponse) Reset() {
-	*x = DomainListResponse{}
+func (x *DeviceListResponse) Reset() {
+	*x = DeviceListResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_proto_actor_device_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -40,13 +40,13 @@ func (x *DomainListResponse) Reset() {
 	}
 }
 
-func (x *DomainListResponse) String() string {
+func (x *DeviceListResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DomainListResponse) ProtoMessage() {}
+func (*DeviceListResponse) ProtoMessage() {}
 
-func (x *DomainListResponse) ProtoReflect() protoreflect.Message {
+func (x *DeviceListResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_actor_device_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -58,26 +58,26 @@ func (x *DomainListResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DomainListResponse.ProtoReflect.Descriptor instead.
-func (*DomainListResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use DeviceListResponse.ProtoReflect.Descriptor instead.
+func (*DeviceListResponse) Descriptor() ([]byte, []int) {
 	return file_proto_actor_device_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *DomainListResponse) GetStatus() *Status {
+func (x *DeviceListResponse) GetStatus() *Status {
 	if x != nil {
 		return x.Status
 	}
 	return nil
 }
 
-func (x *DomainListResponse) GetTotal() int64 {
+func (x *DeviceListResponse) GetTotal() int64 {
 	if x != nil {
 		return x.Total
 	}
 	return 0
 }
 
-func (x *DomainListResponse) GetDomain() []*DeviceEntity {
+func (x *DeviceListResponse) GetDomain() []*DeviceEntity {
 	if x != nil {
 		return x.Domain
 	}
@@ -91,7 +91,7 @@ var file_proto_actor_device_proto_rawDesc = []byte{
 	0x76, 0x69, 0x63, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x05, 0x61, 0x63, 0x74, 0x6f,
 	0x72, 0x1a, 0x18, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x61, 0x63, 0x74, 0x6f, 0x72, 0x2f, 0x73,
 	0x68, 0x61, 0x72, 0x65, 0x64, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x7e, 0x0a, 0x12, 0x44,
-	0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x76, 0x69, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
 	0x65, 0x12, 0x25, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28,
 	0x0b, 0x32, 0x0d, 0x2e, 0x61, 0x63, 0x74, 0x6f, 0x72, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73,
 	0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61,
@@ -101,7 +101,7 @@ var file_proto_actor_device_proto_rawDesc = []byte{
 	0x69, 0x74, 0x79, 0x52, 0x06, 0x64, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x32, 0x41, 0x0a, 0x06, 0x44,
 	0x65, 0x76, 0x69, 0x63, 0x65, 0x12, 0x37, 0x0a, 0x04, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x12, 0x2e,
 	0x61, 0x63, 0x74, 0x6f, 0x72, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x1a, 0x19, 0x2e, 0x61, 0x63, 0x74, 0x6f, 0x72, 0x2e, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e,
+	0x74, 0x1a, 0x19, 0x2e, 0x61, 0x63, 0x74, 0x6f, 0x72, 0x2e, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65,
 	0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x13,
 	0x5a, 0x11, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x61, 0x63, 0x74, 0x6f, 0x72, 0x3b, 0x61, 0x63,
 	0x74, 0x6f, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
@@ -121,16 +121,16 @@ func file_proto_actor_device_proto_rawDescGZIP() []byte {
 
 var file_proto_actor_device_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_proto_actor_device_proto_goTypes = []interface{}{
-	(*DomainListResponse)(nil), // 0: actor.DomainListResponse
+	(*DeviceListResponse)(nil), // 0: actor.DeviceListResponse
 	(*Status)(nil),             // 1: actor.Status
 	(*DeviceEntity)(nil),       // 2: actor.DeviceEntity
 	(*ListRequest)(nil),        // 3: actor.ListRequest
 }
 var file_proto_actor_device_proto_depIdxs = []int32{
-	1, // 0: actor.DomainListResponse.status:type_name -> actor.Status
-	2, // 1: actor.DomainListResponse.domain:type_name -> actor.DeviceEntity
+	1, // 0: actor.DeviceListResponse.status:type_name -> actor.Status
+	2, // 1: actor.DeviceListResponse.domain:type_name -> actor.DeviceEntity
 	3, // 2: actor.Device.List:input_type -> actor.ListRequest
-	0, // 3: actor.Device.List:output_type -> actor.DomainListResponse
+	0, // 3: actor.Device.List:output_type -> actor.DeviceListResponse
 	3, // [3:4] is the sub-list for method output_type
 	2, // [2:3] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name
@@ -146,7 +146,7 @@ func file_proto_actor_device_proto_init() {
 	file_proto_actor_shared_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_proto_actor_device_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DomainListResponse); i {
+			switch v := v.(*DeviceListResponse); i {
 			case 0:
 				return &v.state
 			case 1:

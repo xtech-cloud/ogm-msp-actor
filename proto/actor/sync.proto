@@ -19,17 +19,17 @@ message SyncPushRequest
 {
     string domain = 1;                // 域的UUID
     DeviceEntity device = 2;          // 设备实体
-    map<string, string> upProperty = 3; // 上行属性（提交给服务的属性）
-    map<string, string> downProperty = 4; // 下行属性（希望在服务在回复包含的属性）
+    repeated KV upProperty = 3;       // 上行属性（提交给服务的属性）
+    repeated string downProperty = 4; // 下行属性（希望服务在回复时包含的属性）
 }
 
 // 推送的回复
 message SyncPushResponse
 {
-    Status status = 1;                // 状态
-    int32 access = 2;                 // 访问权限 (0:未处理，1:接受，2：拒绝)
-    string alias = 3;                 // 别名
-    map<string, string> property = 4; // 属性
+    Status status = 1;        // 状态
+    int32 access = 2;         // 访问权限 (0:未处理，1:接受，2：拒绝)
+    string alias = 3;         // 别名
+    repeated KV property = 4; // 属性
 }
 
 // 拉取的请求
@@ -41,7 +41,7 @@ message SyncPullRequest
 // 拉取的请求
 message SyncPullResponse
 {
-    Status status = 1;                // 状态
-    repeated string device = 2;       // 设备列表
-    map<string, string> property = 3; // 属性
+    Status status = 1;          // 状态
+    repeated string device = 2; // 设备列表
+    repeated KV property = 3;   // 属性
 }

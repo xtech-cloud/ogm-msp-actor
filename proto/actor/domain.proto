@@ -68,6 +68,8 @@ message DomainFetchDeviceResponse
     Status status = 1;                // 状态
     int64 total = 2;                  // 总数
     repeated DeviceEntity device = 3; // 设备实体列表
+    map<string, int32> access = 4;    // 设备访问权限
+    map<string, string> alias = 5;    // 设备别名
 }
 
 // 允许设备访问的请求

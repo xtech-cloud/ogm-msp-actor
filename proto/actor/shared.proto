@@ -39,8 +39,9 @@ message DomainEntity
 // 设备实体
 message DeviceEntity
 {
-    string serialNumber = 1;           // 序列号
-    string name = 2;                   // 设备名称
+    string uuid = 1;                   // 设备唯一识别码
+    string serialNumber = 2;           // 序列号
+    string name = 3;                   // 设备名称
     string operatingSystem = 10;       // 操作系统
     string systemVersion = 11;         // 系统版本
     string shape = 20;                 // 形态

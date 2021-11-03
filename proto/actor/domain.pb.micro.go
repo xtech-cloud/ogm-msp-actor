@@ -46,10 +46,8 @@ type DomainService interface {
 	Execute(ctx context.Context, in *DomainExecuteRequest, opts ...client.CallOption) (*BlankResponse, error)
 	// 获取设备
 	FetchDevice(ctx context.Context, in *DomainFetchDeviceRequest, opts ...client.CallOption) (*DomainFetchDeviceResponse, error)
-	// 允许设备访问
-	AcceptDevice(ctx context.Context, in *DomainAcceptDeviceRequest, opts ...client.CallOption) (*BlankResponse, error)
-	// 拒绝设备访问
-	RejectDevice(ctx context.Context, in *DomainRejectDeviceRequest, opts ...client.CallOption) (*BlankResponse, error)
+	// 编辑设备
+	EditDevice(ctx context.Context, in *DomainEditDeviceRequest, opts ...client.CallOption) (*BlankResponse, error)
 }
 
 type domainService struct {
@@ -114,18 +112,8 @@ func (c *domainService) FetchDevice(ctx context.Context, in *DomainFetchDeviceRe
 	return out, nil
 }
 
-func (c *domainService) AcceptDevice(ctx context.Context, in *DomainAcceptDeviceRequest, opts ...client.CallOption) (*BlankResponse, error) {
-	req := c.c.NewRequest(c.name, "Domain.AcceptDevice", in)
-	out := new(BlankResponse)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *domainService) RejectDevice(ctx context.Context, in *DomainRejectDeviceRequest, opts ...client.CallOption) (*BlankResponse, error) {
-	req := c.c.NewRequest(c.name, "Domain.RejectDevice", in)
+func (c *domainService) EditDevice(ctx context.Context, in *DomainEditDeviceRequest, opts ...client.CallOption) (*BlankResponse, error) {
+	req := c.c.NewRequest(c.name, "Domain.EditDevice", in)
 	out := new(BlankResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -147,10 +135,8 @@ type DomainHandler interface {
 	Execute(context.Context, *DomainExecuteRequest, *BlankResponse) error
 	// 获取设备
 	FetchDevice(context.Context, *DomainFetchDeviceRequest, *DomainFetchDeviceResponse) error
-	// 允许设备访问
-	AcceptDevice(context.Context, *DomainAcceptDeviceRequest, *BlankResponse) error
-	// 拒绝设备访问
-	RejectDevice(context.Context, *DomainRejectDeviceRequest, *BlankResponse) error
+	// 编辑设备
+	EditDevice(context.Context, *DomainEditDeviceRequest, *BlankResponse) error
 }
 
 func RegisterDomainHandler(s server.Server, hdlr DomainHandler, opts ...server.HandlerOption) error {
@@ -160,8 +146,7 @@ func RegisterDomainHandler(s server.Server, hdlr DomainHandler, opts ...server.H
 		List(ctx context.Context, in *ListRequest, out *DomainListResponse) error
 		Execute(ctx context.Context, in *DomainExecuteRequest, out *BlankResponse) error
 		FetchDevice(ctx context.Context, in *DomainFetchDeviceRequest, out *DomainFetchDeviceResponse) error
-		AcceptDevice(ctx context.Context, in *DomainAcceptDeviceRequest, out *BlankResponse) error
-		RejectDevice(ctx context.Context, in *DomainRejectDeviceRequest, out *BlankResponse) error
+		EditDevice(ctx context.Context, in *DomainEditDeviceRequest, out *BlankResponse) error
 	}
 	type Domain struct {
 		domain
@@ -194,10 +179,6 @@ func (h *domainHandler) FetchDevice(ctx context.Context, in *DomainFetchDeviceRe
 	return h.DomainHandler.FetchDevice(ctx, in, out)
 }
 
-func (h *domainHandler) AcceptDevice(ctx context.Context, in *DomainAcceptDeviceRequest, out *BlankResponse) error {
-	return h.DomainHandler.AcceptDevice(ctx, in, out)
-}
-
-func (h *domainHandler) RejectDevice(ctx context.Context, in *DomainRejectDeviceRequest, out *BlankResponse) error {
-	return h.DomainHandler.RejectDevice(ctx, in, out)
+func (h *domainHandler) EditDevice(ctx context.Context, in *DomainEditDeviceRequest, out *BlankResponse) error {
+	return h.DomainHandler.EditDevice(ctx, in, out)
 }

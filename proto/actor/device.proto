@@ -25,11 +25,13 @@ message DeviceListResponse
 // 搜索的请求
 message DeviceSearchRequest
 {
-    string serialNumber = 1;    // 序列号
-    string name = 2;            // 设备名称
-    string operatingSystem = 3; // 操作系统
-    string systemVersion = 4;   // 系统版本
-    string shape = 5;           // 形态
+    int64 offset = 1;           // 偏移值
+    int64 count = 2;            // 数量
+    string serialNumber = 3;    // 序列号
+    string name = 4;            // 设备名称
+    string operatingSystem = 5; // 操作系统
+    string systemVersion = 6;   // 系统版本
+    string shape = 7;           // 形态
 }
 
 // 搜索的回复

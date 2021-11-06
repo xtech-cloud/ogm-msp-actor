@@ -14,6 +14,10 @@ service Domain
     rpc Delete(DomainDeleteRequest) returns (BlankResponse) { }
     // 列举
     rpc List(ListRequest) returns (DomainListResponse) { }
+    // 精确查找一个域
+    rpc Find(DomainFindRequest) returns (DomainFindResponse) { }
+    // 模糊查找域
+    rpc Search(DomainSearchRequest) returns (DomainSearchResponse) { }
     // 执行
     rpc Execute(DomainExecuteRequest) returns (BlankResponse) { }
     // 获取设备
@@ -36,6 +40,35 @@ message DomainDeleteRequest
 
 // 列举的回复
 message DomainListResponse
+{
+    Status status = 1;                // 状态
+    int64 total = 2;                  // 总数
+    repeated DomainEntity domain = 3; //域实体
+}
+
+// 查找的请求
+message DomainFindRequest
+{
+    string name = 1; // 域的名称
+}
+
+// 查找的回复
+message DomainFindResponse
+{
+    Status status = 1;       // 状态
+    DomainEntity domain = 2; //域实体
+}
+
+// 搜索的请求
+message DomainSearchRequest
+{
+    int64 offset = 1; // 偏移值
+    int64 count = 2;  // 数量
+    string name = 3;  // 域的名称
+}
+
+// 搜索的回复
+message DomainSearchResponse
 {
     Status status = 1;                // 状态
     int64 total = 2;                  // 总数

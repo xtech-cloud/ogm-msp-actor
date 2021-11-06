@@ -42,6 +42,10 @@ type DomainService interface {
 	Delete(ctx context.Context, in *DomainDeleteRequest, opts ...client.CallOption) (*BlankResponse, error)
 	// 列举
 	List(ctx context.Context, in *ListRequest, opts ...client.CallOption) (*DomainListResponse, error)
+	// 精确查找一个域
+	Find(ctx context.Context, in *DomainFindRequest, opts ...client.CallOption) (*DomainFindResponse, error)
+	// 模糊查找域
+	Search(ctx context.Context, in *DomainSearchRequest, opts ...client.CallOption) (*DomainSearchResponse, error)
 	// 执行
 	Execute(ctx context.Context, in *DomainExecuteRequest, opts ...client.CallOption) (*BlankResponse, error)
 	// 获取设备
@@ -92,6 +96,26 @@ func (c *domainService) List(ctx context.Context, in *ListRequest, opts ...clien
 	return out, nil
 }
 
+func (c *domainService) Find(ctx context.Context, in *DomainFindRequest, opts ...client.CallOption) (*DomainFindResponse, error) {
+	req := c.c.NewRequest(c.name, "Domain.Find", in)
+	out := new(DomainFindResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *domainService) Search(ctx context.Context, in *DomainSearchRequest, opts ...client.CallOption) (*DomainSearchResponse, error) {
+	req := c.c.NewRequest(c.name, "Domain.Search", in)
+	out := new(DomainSearchResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *domainService) Execute(ctx context.Context, in *DomainExecuteRequest, opts ...client.CallOption) (*BlankResponse, error) {
 	req := c.c.NewRequest(c.name, "Domain.Execute", in)
 	out := new(BlankResponse)
@@ -131,6 +155,10 @@ type DomainHandler interface {
 	Delete(context.Context, *DomainDeleteRequest, *BlankResponse) error
 	// 列举
 	List(context.Context, *ListRequest, *DomainListResponse) error
+	// 精确查找一个域
+	Find(context.Context, *DomainFindRequest, *DomainFindResponse) error
+	// 模糊查找域
+	Search(context.Context, *DomainSearchRequest, *DomainSearchResponse) error
 	// 执行
 	Execute(context.Context, *DomainExecuteRequest, *BlankResponse) error
 	// 获取设备
@@ -144,6 +172,8 @@ func RegisterDomainHandler(s server.Server, hdlr DomainHandler, opts ...server.H
 		Create(ctx context.Context, in *DomainCreateRequest, out *BlankResponse) error
 		Delete(ctx context.Context, in *DomainDeleteRequest, out *BlankResponse) error
 		List(ctx context.Context, in *ListRequest, out *DomainListResponse) error
+		Find(ctx context.Context, in *DomainFindRequest, out *DomainFindResponse) error
+		Search(ctx context.Context, in *DomainSearchRequest, out *DomainSearchResponse) error
 		Execute(ctx context.Context, in *DomainExecuteRequest, out *BlankResponse) error
 		FetchDevice(ctx context.Context, in *DomainFetchDeviceRequest, out *DomainFetchDeviceResponse) error
 		EditDevice(ctx context.Context, in *DomainEditDeviceRequest, out *BlankResponse) error
@@ -169,6 +199,14 @@ func (h *domainHandler) Delete(ctx context.Context, in *DomainDeleteRequest, out
 
 func (h *domainHandler) List(ctx context.Context, in *ListRequest, out *DomainListResponse) error {
 	return h.DomainHandler.List(ctx, in, out)
+}
+
+func (h *domainHandler) Find(ctx context.Context, in *DomainFindRequest, out *DomainFindResponse) error {
+	return h.DomainHandler.Find(ctx, in, out)
+}
+
+func (h *domainHandler) Search(ctx context.Context, in *DomainSearchRequest, out *DomainSearchResponse) error {
+	return h.DomainHandler.Search(ctx, in, out)
 }
 
 func (h *domainHandler) Execute(ctx context.Context, in *DomainExecuteRequest, out *BlankResponse) error {

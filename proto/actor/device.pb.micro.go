@@ -38,6 +38,8 @@ func NewDeviceEndpoints() []*api.Endpoint {
 type DeviceService interface {
 	// 列举
 	List(ctx context.Context, in *ListRequest, opts ...client.CallOption) (*DeviceListResponse, error)
+	// 搜索
+	Search(ctx context.Context, in *DeviceSearchRequest, opts ...client.CallOption) (*DeviceSearchResponse, error)
 }
 
 type deviceService struct {
@@ -62,16 +64,29 @@ func (c *deviceService) List(ctx context.Context, in *ListRequest, opts ...clien
 	return out, nil
 }
 
+func (c *deviceService) Search(ctx context.Context, in *DeviceSearchRequest, opts ...client.CallOption) (*DeviceSearchResponse, error) {
+	req := c.c.NewRequest(c.name, "Device.Search", in)
+	out := new(DeviceSearchResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Device service
 
 type DeviceHandler interface {
 	// 列举
 	List(context.Context, *ListRequest, *DeviceListResponse) error
+	// 搜索
+	Search(context.Context, *DeviceSearchRequest, *DeviceSearchResponse) error
 }
 
 func RegisterDeviceHandler(s server.Server, hdlr DeviceHandler, opts ...server.HandlerOption) error {
 	type device interface {
 		List(ctx context.Context, in *ListRequest, out *DeviceListResponse) error
+		Search(ctx context.Context, in *DeviceSearchRequest, out *DeviceSearchResponse) error
 	}
 	type Device struct {
 		device
@@ -86,4 +101,8 @@ type deviceHandler struct {
 
 func (h *deviceHandler) List(ctx context.Context, in *ListRequest, out *DeviceListResponse) error {
 	return h.DeviceHandler.List(ctx, in, out)
+}
+
+func (h *deviceHandler) Search(ctx context.Context, in *DeviceSearchRequest, out *DeviceSearchResponse) error {
+	return h.DeviceHandler.Search(ctx, in, out)
 }

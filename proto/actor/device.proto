@@ -10,10 +10,30 @@ service Device
 {
     // 列举
     rpc List(ListRequest) returns (DeviceListResponse) { }
+    // 搜索
+    rpc Search(DeviceSearchRequest) returns (DeviceSearchResponse) { }
 }
 
 // 列举的回复
 message DeviceListResponse
+{
+    Status status = 1;                // 状态
+    int64 total = 2;                  // 总数
+    repeated DeviceEntity device = 3; // 设备实体
+}
+
+// 搜索的请求
+message DeviceSearchRequest
+{
+    string serialNumber = 1;    // 序列号
+    string name = 2;            // 设备名称
+    string operatingSystem = 3; // 操作系统
+    string systemVersion = 4;   // 系统版本
+    string shape = 5;           // 形态
+}
+
+// 搜索的回复
+message DeviceSearchResponse
 {
     Status status = 1;                // 状态
     int64 total = 2;                  // 总数

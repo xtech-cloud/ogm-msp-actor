@@ -38,6 +38,8 @@ func NewDomainEndpoints() []*api.Endpoint {
 type DomainService interface {
 	// 创建
 	Create(ctx context.Context, in *DomainCreateRequest, opts ...client.CallOption) (*BlankResponse, error)
+	// 更新
+	Update(ctx context.Context, in *DomainUpdateRequest, opts ...client.CallOption) (*BlankResponse, error)
 	// 删除
 	Delete(ctx context.Context, in *DomainDeleteRequest, opts ...client.CallOption) (*BlankResponse, error)
 	// 列举
@@ -64,6 +66,16 @@ func NewDomainService(name string, c client.Client) DomainService {
 
 func (c *domainService) Create(ctx context.Context, in *DomainCreateRequest, opts ...client.CallOption) (*BlankResponse, error) {
 	req := c.c.NewRequest(c.name, "Domain.Create", in)
+	out := new(BlankResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *domainService) Update(ctx context.Context, in *DomainUpdateRequest, opts ...client.CallOption) (*BlankResponse, error) {
+	req := c.c.NewRequest(c.name, "Domain.Update", in)
 	out := new(BlankResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -127,6 +139,8 @@ func (c *domainService) Execute(ctx context.Context, in *DomainExecuteRequest, o
 type DomainHandler interface {
 	// 创建
 	Create(context.Context, *DomainCreateRequest, *BlankResponse) error
+	// 更新
+	Update(context.Context, *DomainUpdateRequest, *BlankResponse) error
 	// 删除
 	Delete(context.Context, *DomainDeleteRequest, *BlankResponse) error
 	// 列举
@@ -142,6 +156,7 @@ type DomainHandler interface {
 func RegisterDomainHandler(s server.Server, hdlr DomainHandler, opts ...server.HandlerOption) error {
 	type domain interface {
 		Create(ctx context.Context, in *DomainCreateRequest, out *BlankResponse) error
+		Update(ctx context.Context, in *DomainUpdateRequest, out *BlankResponse) error
 		Delete(ctx context.Context, in *DomainDeleteRequest, out *BlankResponse) error
 		List(ctx context.Context, in *ListRequest, out *DomainListResponse) error
 		Find(ctx context.Context, in *DomainFindRequest, out *DomainFindResponse) error
@@ -161,6 +176,10 @@ type domainHandler struct {
 
 func (h *domainHandler) Create(ctx context.Context, in *DomainCreateRequest, out *BlankResponse) error {
 	return h.DomainHandler.Create(ctx, in, out)
+}
+
+func (h *domainHandler) Update(ctx context.Context, in *DomainUpdateRequest, out *BlankResponse) error {
+	return h.DomainHandler.Update(ctx, in, out)
 }
 
 func (h *domainHandler) Delete(ctx context.Context, in *DomainDeleteRequest, out *BlankResponse) error {

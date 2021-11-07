@@ -10,6 +10,8 @@ service Domain
 {
     // 创建
     rpc Create(DomainCreateRequest) returns (BlankResponse) { }
+    // 更新
+    rpc Update(DomainUpdateRequest) returns (BlankResponse) { }
     // 删除
     rpc Delete(DomainDeleteRequest) returns (BlankResponse) { }
     // 列举
@@ -26,6 +28,13 @@ service Domain
 message DomainCreateRequest
 {
     string name = 1; // 域的名称
+}
+
+// 更新的请求
+message DomainUpdateRequest
+{
+    string uuid = 1; // 域的UUID
+    string name = 2; // 域的名称
 }
 
 // 删除的请求

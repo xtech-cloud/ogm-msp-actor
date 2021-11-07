@@ -48,10 +48,6 @@ type DomainService interface {
 	Search(ctx context.Context, in *DomainSearchRequest, opts ...client.CallOption) (*DomainSearchResponse, error)
 	// 执行
 	Execute(ctx context.Context, in *DomainExecuteRequest, opts ...client.CallOption) (*BlankResponse, error)
-	// 获取设备
-	FetchDevice(ctx context.Context, in *DomainFetchDeviceRequest, opts ...client.CallOption) (*DomainFetchDeviceResponse, error)
-	// 编辑设备
-	EditDevice(ctx context.Context, in *DomainEditDeviceRequest, opts ...client.CallOption) (*BlankResponse, error)
 }
 
 type domainService struct {
@@ -126,26 +122,6 @@ func (c *domainService) Execute(ctx context.Context, in *DomainExecuteRequest, o
 	return out, nil
 }
 
-func (c *domainService) FetchDevice(ctx context.Context, in *DomainFetchDeviceRequest, opts ...client.CallOption) (*DomainFetchDeviceResponse, error) {
-	req := c.c.NewRequest(c.name, "Domain.FetchDevice", in)
-	out := new(DomainFetchDeviceResponse)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *domainService) EditDevice(ctx context.Context, in *DomainEditDeviceRequest, opts ...client.CallOption) (*BlankResponse, error) {
-	req := c.c.NewRequest(c.name, "Domain.EditDevice", in)
-	out := new(BlankResponse)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // Server API for Domain service
 
 type DomainHandler interface {
@@ -161,10 +137,6 @@ type DomainHandler interface {
 	Search(context.Context, *DomainSearchRequest, *DomainSearchResponse) error
 	// 执行
 	Execute(context.Context, *DomainExecuteRequest, *BlankResponse) error
-	// 获取设备
-	FetchDevice(context.Context, *DomainFetchDeviceRequest, *DomainFetchDeviceResponse) error
-	// 编辑设备
-	EditDevice(context.Context, *DomainEditDeviceRequest, *BlankResponse) error
 }
 
 func RegisterDomainHandler(s server.Server, hdlr DomainHandler, opts ...server.HandlerOption) error {
@@ -175,8 +147,6 @@ func RegisterDomainHandler(s server.Server, hdlr DomainHandler, opts ...server.H
 		Find(ctx context.Context, in *DomainFindRequest, out *DomainFindResponse) error
 		Search(ctx context.Context, in *DomainSearchRequest, out *DomainSearchResponse) error
 		Execute(ctx context.Context, in *DomainExecuteRequest, out *BlankResponse) error
-		FetchDevice(ctx context.Context, in *DomainFetchDeviceRequest, out *DomainFetchDeviceResponse) error
-		EditDevice(ctx context.Context, in *DomainEditDeviceRequest, out *BlankResponse) error
 	}
 	type Domain struct {
 		domain
@@ -211,12 +181,4 @@ func (h *domainHandler) Search(ctx context.Context, in *DomainSearchRequest, out
 
 func (h *domainHandler) Execute(ctx context.Context, in *DomainExecuteRequest, out *BlankResponse) error {
 	return h.DomainHandler.Execute(ctx, in, out)
-}
-
-func (h *domainHandler) FetchDevice(ctx context.Context, in *DomainFetchDeviceRequest, out *DomainFetchDeviceResponse) error {
-	return h.DomainHandler.FetchDevice(ctx, in, out)
-}
-
-func (h *domainHandler) EditDevice(ctx context.Context, in *DomainEditDeviceRequest, out *BlankResponse) error {
-	return h.DomainHandler.EditDevice(ctx, in, out)
 }

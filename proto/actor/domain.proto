@@ -20,10 +20,6 @@ service Domain
     rpc Search(DomainSearchRequest) returns (DomainSearchResponse) { }
     // 执行
     rpc Execute(DomainExecuteRequest) returns (BlankResponse) { }
-    // 获取设备
-    rpc FetchDevice(DomainFetchDeviceRequest) returns (DomainFetchDeviceResponse) { }
-    // 编辑设备
-    rpc EditDevice(DomainEditDeviceRequest) returns (BlankResponse) { }
 }
 
 // 创建的请求
@@ -82,32 +78,4 @@ message DomainExecuteRequest
     string command = 2;         // 指令
     repeated string device = 3; // 设备ID
     string parameter = 4;       // 参数(base64编码的json格式)
-}
-
-// 获取设备的请求
-message DomainFetchDeviceRequest
-{
-    string uuid = 1;                // 域的uuid
-    int64 offset = 2;               // 偏移值
-    int64 count = 3;                // 数量
-    map<string, string> filter = 4; // 过滤器
-}
-
-// 获取设备的回复
-message DomainFetchDeviceResponse
-{
-    Status status = 1;                // 状态
-    int64 total = 2;                  // 总数
-    repeated DeviceEntity device = 3; // 设备实体列表
-    map<string, int32> access = 4;    // 设备访问权限
-    map<string, string> alias = 5;    // 设备别名
-}
-
-// 编辑设备的请求
-message DomainEditDeviceRequest
-{
-    string uuid = 1;   // 域的uuid
-    string device = 2; // 设备的uuid
-    int32 access = 3;  // 访问权限(1:允许，2：拒绝)
-    string alias = 4;  // 别名
 }

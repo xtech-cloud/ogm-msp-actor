@@ -55,3 +55,13 @@ message DeviceEntity
     int32 networkStrength = 41;        // 网络信号强度
     map<string, string> program = 101; // 程序信息<程序名，程序版本>
 }
+
+// 应用实体
+message ApplicationEntity
+{
+    string name = 1;     // 应用名
+    string version = 2;  // 应用版本
+    string program = 3;  // 可执行文件
+    string location = 4; // 安装路径
+    string url = 5;      // 下载地址
+}

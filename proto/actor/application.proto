@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+import "proto/actor/shared.proto";
+
+package actor;
+option go_package = "proto/actor;actor";
+
+// 应用
+service Application
+{
+    // 添加
+    rpc Add(ApplicationAddRequest) returns (BlankResponse) { }
+    // 移除
+    rpc Remove(ApplicationRemoveRequest) returns (BlankResponse) { }
+    // 列举
+    rpc List(ApplicationListRequest) returns (ApplicationListResponse) { }
+}
+
+// 添加的请求
+message ApplicationAddRequest
+{
+    string domain = 1;    // 域的uuid
+    string name = 10;     // 应用名
+    string version = 11;  // 应用版本
+    string program = 12;  // 可执行文件
+    string location = 13; // 安装路径
+    string url = 21;      // 下载地址
+}
+
+// 移除的请求
+message ApplicationRemoveRequest
+{
+    string uuid = 1; // 应用的uuid
+}
+
+// 列举的请求
+message ApplicationListRequest
+{
+    int64 offset = 1;  // 偏移值
+    int64 count = 2;   // 数量
+    string domain = 3; // 域的uuid
+}
+
+// 列举的回复
+message ApplicationListResponse
+{
+    int64 total = 1;                            // 总数
+    repeated ApplicationEntity application = 2; // 应用实体列表
+}

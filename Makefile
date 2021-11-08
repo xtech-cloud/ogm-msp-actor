@@ -5,5 +5,6 @@ proto:
 	protoc --proto_path=. --micro_out=. --go_out=. proto/actor/domain.proto
 	protoc --proto_path=. --micro_out=. --go_out=. proto/actor/device.proto
 	protoc --proto_path=. --micro_out=. --go_out=. proto/actor/guard.proto
+	protoc --proto_path=. --micro_out=. --go_out=. proto/actor/application.proto
 	protoc --proto_path=. --micro_out=. --go_out=. proto/actor/sync.proto
 

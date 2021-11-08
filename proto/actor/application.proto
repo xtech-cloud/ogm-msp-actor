@@ -44,6 +44,7 @@ message ApplicationListRequest
 // 列举的回复
 message ApplicationListResponse
 {
-    int64 total = 1;                            // 总数
-    repeated ApplicationEntity application = 2; // 应用实体列表
+    Status status = 1;                          // 状态
+    int64 total = 2;                            // 总数
+    repeated ApplicationEntity application = 3; // 应用实体列表
 }

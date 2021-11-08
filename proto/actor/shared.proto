@@ -59,9 +59,10 @@ message DeviceEntity
 // 应用实体
 message ApplicationEntity
 {
-    string name = 1;     // 应用名
-    string version = 2;  // 应用版本
-    string program = 3;  // 可执行文件
-    string location = 4; // 安装路径
-    string url = 5;      // 下载地址
+    string uuid = 1;     // 应用唯一识别码
+    string name = 2;     // 应用名
+    string version = 3;  // 应用版本
+    string program = 4;  // 可执行文件
+    string location = 5; // 安装路径
+    string url = 6;      // 下载地址
 }

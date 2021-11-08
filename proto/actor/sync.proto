@@ -44,5 +44,6 @@ message SyncPullResponse
 {
     Status status = 1;                // 状态
     repeated DeviceEntity device = 2; // 设备列表
-    map<string, string> property = 3; // 属性
+    map<string, string> alias = 3;    // 设备别名
+    map<string, string> property = 4; // 属性
 }

@@ -42,6 +42,8 @@ type ApplicationService interface {
 	Remove(ctx context.Context, in *ApplicationRemoveRequest, opts ...client.CallOption) (*BlankResponse, error)
 	// 列举
 	List(ctx context.Context, in *ApplicationListRequest, opts ...client.CallOption) (*ApplicationListResponse, error)
+	// 更新
+	Update(ctx context.Context, in *ApplicationUpdateRequest, opts ...client.CallOption) (*BlankResponse, error)
 }
 
 type applicationService struct {
@@ -86,6 +88,16 @@ func (c *applicationService) List(ctx context.Context, in *ApplicationListReques
 	return out, nil
 }
 
+func (c *applicationService) Update(ctx context.Context, in *ApplicationUpdateRequest, opts ...client.CallOption) (*BlankResponse, error) {
+	req := c.c.NewRequest(c.name, "Application.Update", in)
+	out := new(BlankResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Application service
 
 type ApplicationHandler interface {
@@ -95,6 +107,8 @@ type ApplicationHandler interface {
 	Remove(context.Context, *ApplicationRemoveRequest, *BlankResponse) error
 	// 列举
 	List(context.Context, *ApplicationListRequest, *ApplicationListResponse) error
+	// 更新
+	Update(context.Context, *ApplicationUpdateRequest, *BlankResponse) error
 }
 
 func RegisterApplicationHandler(s server.Server, hdlr ApplicationHandler, opts ...server.HandlerOption) error {
@@ -102,6 +116,7 @@ func RegisterApplicationHandler(s server.Server, hdlr ApplicationHandler, opts .
 		Add(ctx context.Context, in *ApplicationAddRequest, out *BlankResponse) error
 		Remove(ctx context.Context, in *ApplicationRemoveRequest, out *BlankResponse) error
 		List(ctx context.Context, in *ApplicationListRequest, out *ApplicationListResponse) error
+		Update(ctx context.Context, in *ApplicationUpdateRequest, out *BlankResponse) error
 	}
 	type Application struct {
 		application
@@ -124,4 +139,8 @@ func (h *applicationHandler) Remove(ctx context.Context, in *ApplicationRemoveRe
 
 func (h *applicationHandler) List(ctx context.Context, in *ApplicationListRequest, out *ApplicationListResponse) error {
 	return h.ApplicationHandler.List(ctx, in, out)
+}
+
+func (h *applicationHandler) Update(ctx context.Context, in *ApplicationUpdateRequest, out *BlankResponse) error {
+	return h.ApplicationHandler.Update(ctx, in, out)
 }

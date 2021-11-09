@@ -14,6 +14,8 @@ service Application
     rpc Remove(ApplicationRemoveRequest) returns (BlankResponse) { }
     // 列举
     rpc List(ApplicationListRequest) returns (ApplicationListResponse) { }
+    // 更新
+    rpc Update(ApplicationUpdateRequest) returns (BlankResponse) { }
 }
 
 // 添加的请求
@@ -25,6 +27,19 @@ message ApplicationAddRequest
     string program = 12;  // 可执行文件
     string location = 13; // 安装路径
     string url = 21;      // 下载地址
+    int32 upgrade = 30;   // 更新策略
+}
+
+// 更新的请求
+message ApplicationUpdateRequest
+{
+    string uuid = 1;      // 应用的UUID
+    string name = 10;     // 应用名
+    string version = 11;  // 应用版本
+    string program = 12;  // 可执行文件
+    string location = 13; // 安装路径
+    string url = 21;      // 下载地址
+    int32 upgrade = 30;   // 更新策略
 }
 
 // 移除的请求

@@ -65,5 +65,5 @@ message ApplicationEntity
     string program = 4;  // 可执行文件
     string location = 5; // 安装路径
     string url = 6;      // 下载地址
-    int32 upgrade = 10;  // 更新策略 (0: 不更新，1：自动更新，2：手动更新)
+    int32 upgrade = 10;  // 更新策略 (0: 空值，1: 不更新，2：自动更新，3：手动更新)
 }

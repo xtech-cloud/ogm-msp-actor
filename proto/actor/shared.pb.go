@@ -455,7 +455,7 @@ type ApplicationEntity struct {
 	Program  string `protobuf:"bytes,4,opt,name=program,proto3" json:"program,omitempty"`   // 可执行文件
 	Location string `protobuf:"bytes,5,opt,name=location,proto3" json:"location,omitempty"` // 安装路径
 	Url      string `protobuf:"bytes,6,opt,name=url,proto3" json:"url,omitempty"`           // 下载地址
-	Upgrade  int32  `protobuf:"varint,10,opt,name=upgrade,proto3" json:"upgrade,omitempty"` // 更新策略 (0: 不更新，1：自动更新，2：手动更新)
+	Upgrade  int32  `protobuf:"varint,10,opt,name=upgrade,proto3" json:"upgrade,omitempty"` // 更新策略 (0: 空值，1: 不更新，2：自动更新，3：手动更新)
 }
 
 func (x *ApplicationEntity) Reset() {

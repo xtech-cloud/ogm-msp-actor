@@ -85,6 +85,6 @@ message DomainExecuteRequest
 {
     string uuid = 1;            // 域的uuid
     string command = 2;         // 指令
-    repeated string device = 3; // 设备ID
+    repeated string device = 3; // 设备序列号
     string parameter = 4;       // 参数(base64编码的json格式)
 }

@@ -476,7 +476,7 @@ type DomainExecuteRequest struct {
 
 	Uuid      string   `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`           // 域的uuid
 	Command   string   `protobuf:"bytes,2,opt,name=command,proto3" json:"command,omitempty"`     // 指令
-	Device    []string `protobuf:"bytes,3,rep,name=device,proto3" json:"device,omitempty"`       // 设备ID
+	Device    []string `protobuf:"bytes,3,rep,name=device,proto3" json:"device,omitempty"`       // 设备序列号
 	Parameter string   `protobuf:"bytes,4,opt,name=parameter,proto3" json:"parameter,omitempty"` // 参数(base64编码的json格式)
 }
 

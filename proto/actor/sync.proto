@@ -12,6 +12,8 @@ service Sync
     rpc Push(SyncPushRequest) returns (SyncPushResponse) { }
     // 拉取
     rpc Pull(SyncPullRequest) returns (SyncPullResponse) { }
+    // 上传
+    rpc Upload(SyncUploadRequest) returns (BlankResponse) { }
 }
 
 // 推送的请求
@@ -48,4 +50,13 @@ message SyncPullResponse
     repeated DeviceEntity device = 2; // 设备列表
     map<string, string> alias = 3;    // 设备别名
     map<string, string> property = 4; // 属性
+}
+
+// 上传的请求
+message SyncUploadRequest
+{
+    string domain = 1; // 域的UUID
+    string device = 2; // 设备的序列号
+    string name = 3;   // 数据名
+    string data = 4;   // 数据包(base64编码)
 }

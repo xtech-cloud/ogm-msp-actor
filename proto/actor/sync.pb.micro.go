@@ -40,6 +40,8 @@ type SyncService interface {
 	Push(ctx context.Context, in *SyncPushRequest, opts ...client.CallOption) (*SyncPushResponse, error)
 	// 拉取
 	Pull(ctx context.Context, in *SyncPullRequest, opts ...client.CallOption) (*SyncPullResponse, error)
+	// 上传
+	Upload(ctx context.Context, in *SyncUploadRequest, opts ...client.CallOption) (*BlankResponse, error)
 }
 
 type syncService struct {
@@ -74,6 +76,16 @@ func (c *syncService) Pull(ctx context.Context, in *SyncPullRequest, opts ...cli
 	return out, nil
 }
 
+func (c *syncService) Upload(ctx context.Context, in *SyncUploadRequest, opts ...client.CallOption) (*BlankResponse, error) {
+	req := c.c.NewRequest(c.name, "Sync.Upload", in)
+	out := new(BlankResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Sync service
 
 type SyncHandler interface {
@@ -81,12 +93,15 @@ type SyncHandler interface {
 	Push(context.Context, *SyncPushRequest, *SyncPushResponse) error
 	// 拉取
 	Pull(context.Context, *SyncPullRequest, *SyncPullResponse) error
+	// 上传
+	Upload(context.Context, *SyncUploadRequest, *BlankResponse) error
 }
 
 func RegisterSyncHandler(s server.Server, hdlr SyncHandler, opts ...server.HandlerOption) error {
 	type sync interface {
 		Push(ctx context.Context, in *SyncPushRequest, out *SyncPushResponse) error
 		Pull(ctx context.Context, in *SyncPullRequest, out *SyncPullResponse) error
+		Upload(ctx context.Context, in *SyncUploadRequest, out *BlankResponse) error
 	}
 	type Sync struct {
 		sync
@@ -105,4 +120,8 @@ func (h *syncHandler) Push(ctx context.Context, in *SyncPushRequest, out *SyncPu
 
 func (h *syncHandler) Pull(ctx context.Context, in *SyncPullRequest, out *SyncPullResponse) error {
 	return h.SyncHandler.Pull(ctx, in, out)
+}
+
+func (h *syncHandler) Upload(ctx context.Context, in *SyncUploadRequest, out *BlankResponse) error {
+	return h.SyncHandler.Upload(ctx, in, out)
 }

@@ -43,13 +43,14 @@ message SyncPullRequest
     repeated string downProperty = 2; // 下行属性（希望服务在回复时包含的属性）
 }
 
-// 拉取的请求
+// 拉取的回复
 message SyncPullResponse
 {
     Status status = 1;                // 状态
     repeated DeviceEntity device = 2; // 设备列表
     map<string, string> alias = 3;    // 设备别名
     map<string, string> property = 4; // 属性
+    map<string, int32> healthy = 5;   // 健康值
 }
 
 // 上传的请求

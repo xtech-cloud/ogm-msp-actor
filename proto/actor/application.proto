@@ -59,7 +59,8 @@ message ApplicationGetRequest
 // 获取的回复
 message ApplicationGetResponse
 {
-    ApplicationEntity application = 1; // 应用实体
+    Status status = 1;                 // 状态
+    ApplicationEntity application = 2; // 应用实体
 }
 
 // 列举的请求

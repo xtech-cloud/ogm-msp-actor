@@ -21,6 +21,13 @@ message BlankResponse
     Status status = 1; // 请求状态
 }
 
+// Uuid的回复
+message UuidResponse
+{
+    Status status = 1; // 请求状态
+    string uuid = 2;   // uuid
+}
+
 // 列举的请求
 message ListRequest
 {

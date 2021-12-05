@@ -37,13 +37,13 @@ func NewApplicationEndpoints() []*api.Endpoint {
 
 type ApplicationService interface {
 	// 添加
-	Add(ctx context.Context, in *ApplicationAddRequest, opts ...client.CallOption) (*BlankResponse, error)
+	Add(ctx context.Context, in *ApplicationAddRequest, opts ...client.CallOption) (*UuidResponse, error)
 	// 移除
-	Remove(ctx context.Context, in *ApplicationRemoveRequest, opts ...client.CallOption) (*BlankResponse, error)
+	Remove(ctx context.Context, in *ApplicationRemoveRequest, opts ...client.CallOption) (*UuidResponse, error)
 	// 列举
 	List(ctx context.Context, in *ApplicationListRequest, opts ...client.CallOption) (*ApplicationListResponse, error)
 	// 更新
-	Update(ctx context.Context, in *ApplicationUpdateRequest, opts ...client.CallOption) (*BlankResponse, error)
+	Update(ctx context.Context, in *ApplicationUpdateRequest, opts ...client.CallOption) (*UuidResponse, error)
 }
 
 type applicationService struct {
@@ -58,9 +58,9 @@ func NewApplicationService(name string, c client.Client) ApplicationService {
 	}
 }
 
-func (c *applicationService) Add(ctx context.Context, in *ApplicationAddRequest, opts ...client.CallOption) (*BlankResponse, error) {
+func (c *applicationService) Add(ctx context.Context, in *ApplicationAddRequest, opts ...client.CallOption) (*UuidResponse, error) {
 	req := c.c.NewRequest(c.name, "Application.Add", in)
-	out := new(BlankResponse)
+	out := new(UuidResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -68,9 +68,9 @@ func (c *applicationService) Add(ctx context.Context, in *ApplicationAddRequest,
 	return out, nil
 }
 
-func (c *applicationService) Remove(ctx context.Context, in *ApplicationRemoveRequest, opts ...client.CallOption) (*BlankResponse, error) {
+func (c *applicationService) Remove(ctx context.Context, in *ApplicationRemoveRequest, opts ...client.CallOption) (*UuidResponse, error) {
 	req := c.c.NewRequest(c.name, "Application.Remove", in)
-	out := new(BlankResponse)
+	out := new(UuidResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -88,9 +88,9 @@ func (c *applicationService) List(ctx context.Context, in *ApplicationListReques
 	return out, nil
 }
 
-func (c *applicationService) Update(ctx context.Context, in *ApplicationUpdateRequest, opts ...client.CallOption) (*BlankResponse, error) {
+func (c *applicationService) Update(ctx context.Context, in *ApplicationUpdateRequest, opts ...client.CallOption) (*UuidResponse, error) {
 	req := c.c.NewRequest(c.name, "Application.Update", in)
-	out := new(BlankResponse)
+	out := new(UuidResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -102,21 +102,21 @@ func (c *applicationService) Update(ctx context.Context, in *ApplicationUpdateRe
 
 type ApplicationHandler interface {
 	// 添加
-	Add(context.Context, *ApplicationAddRequest, *BlankResponse) error
+	Add(context.Context, *ApplicationAddRequest, *UuidResponse) error
 	// 移除
-	Remove(context.Context, *ApplicationRemoveRequest, *BlankResponse) error
+	Remove(context.Context, *ApplicationRemoveRequest, *UuidResponse) error
 	// 列举
 	List(context.Context, *ApplicationListRequest, *ApplicationListResponse) error
 	// 更新
-	Update(context.Context, *ApplicationUpdateRequest, *BlankResponse) error
+	Update(context.Context, *ApplicationUpdateRequest, *UuidResponse) error
 }
 
 func RegisterApplicationHandler(s server.Server, hdlr ApplicationHandler, opts ...server.HandlerOption) error {
 	type application interface {
-		Add(ctx context.Context, in *ApplicationAddRequest, out *BlankResponse) error
-		Remove(ctx context.Context, in *ApplicationRemoveRequest, out *BlankResponse) error
+		Add(ctx context.Context, in *ApplicationAddRequest, out *UuidResponse) error
+		Remove(ctx context.Context, in *ApplicationRemoveRequest, out *UuidResponse) error
 		List(ctx context.Context, in *ApplicationListRequest, out *ApplicationListResponse) error
-		Update(ctx context.Context, in *ApplicationUpdateRequest, out *BlankResponse) error
+		Update(ctx context.Context, in *ApplicationUpdateRequest, out *UuidResponse) error
 	}
 	type Application struct {
 		application
@@ -129,11 +129,11 @@ type applicationHandler struct {
 	ApplicationHandler
 }
 
-func (h *applicationHandler) Add(ctx context.Context, in *ApplicationAddRequest, out *BlankResponse) error {
+func (h *applicationHandler) Add(ctx context.Context, in *ApplicationAddRequest, out *UuidResponse) error {
 	return h.ApplicationHandler.Add(ctx, in, out)
 }
 
-func (h *applicationHandler) Remove(ctx context.Context, in *ApplicationRemoveRequest, out *BlankResponse) error {
+func (h *applicationHandler) Remove(ctx context.Context, in *ApplicationRemoveRequest, out *UuidResponse) error {
 	return h.ApplicationHandler.Remove(ctx, in, out)
 }
 
@@ -141,6 +141,6 @@ func (h *applicationHandler) List(ctx context.Context, in *ApplicationListReques
 	return h.ApplicationHandler.List(ctx, in, out)
 }
 
-func (h *applicationHandler) Update(ctx context.Context, in *ApplicationUpdateRequest, out *BlankResponse) error {
+func (h *applicationHandler) Update(ctx context.Context, in *ApplicationUpdateRequest, out *UuidResponse) error {
 	return h.ApplicationHandler.Update(ctx, in, out)
 }

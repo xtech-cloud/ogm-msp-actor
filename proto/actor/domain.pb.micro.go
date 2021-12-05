@@ -37,13 +37,15 @@ func NewDomainEndpoints() []*api.Endpoint {
 
 type DomainService interface {
 	// 创建
-	Create(ctx context.Context, in *DomainCreateRequest, opts ...client.CallOption) (*BlankResponse, error)
+	Create(ctx context.Context, in *DomainCreateRequest, opts ...client.CallOption) (*UuidResponse, error)
 	// 更新
-	Update(ctx context.Context, in *DomainUpdateRequest, opts ...client.CallOption) (*BlankResponse, error)
+	Update(ctx context.Context, in *DomainUpdateRequest, opts ...client.CallOption) (*UuidResponse, error)
 	// 删除
-	Delete(ctx context.Context, in *DomainDeleteRequest, opts ...client.CallOption) (*BlankResponse, error)
+	Delete(ctx context.Context, in *DomainDeleteRequest, opts ...client.CallOption) (*UuidResponse, error)
 	// 列举
 	List(ctx context.Context, in *ListRequest, opts ...client.CallOption) (*DomainListResponse, error)
+	// 获取
+	Get(ctx context.Context, in *DomainGetRequest, opts ...client.CallOption) (*DomainGetResponse, error)
 	// 精确查找一个域
 	Find(ctx context.Context, in *DomainFindRequest, opts ...client.CallOption) (*DomainFindResponse, error)
 	// 模糊查找域
@@ -64,9 +66,9 @@ func NewDomainService(name string, c client.Client) DomainService {
 	}
 }
 
-func (c *domainService) Create(ctx context.Context, in *DomainCreateRequest, opts ...client.CallOption) (*BlankResponse, error) {
+func (c *domainService) Create(ctx context.Context, in *DomainCreateRequest, opts ...client.CallOption) (*UuidResponse, error) {
 	req := c.c.NewRequest(c.name, "Domain.Create", in)
-	out := new(BlankResponse)
+	out := new(UuidResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -74,9 +76,9 @@ func (c *domainService) Create(ctx context.Context, in *DomainCreateRequest, opt
 	return out, nil
 }
 
-func (c *domainService) Update(ctx context.Context, in *DomainUpdateRequest, opts ...client.CallOption) (*BlankResponse, error) {
+func (c *domainService) Update(ctx context.Context, in *DomainUpdateRequest, opts ...client.CallOption) (*UuidResponse, error) {
 	req := c.c.NewRequest(c.name, "Domain.Update", in)
-	out := new(BlankResponse)
+	out := new(UuidResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -84,9 +86,9 @@ func (c *domainService) Update(ctx context.Context, in *DomainUpdateRequest, opt
 	return out, nil
 }
 
-func (c *domainService) Delete(ctx context.Context, in *DomainDeleteRequest, opts ...client.CallOption) (*BlankResponse, error) {
+func (c *domainService) Delete(ctx context.Context, in *DomainDeleteRequest, opts ...client.CallOption) (*UuidResponse, error) {
 	req := c.c.NewRequest(c.name, "Domain.Delete", in)
-	out := new(BlankResponse)
+	out := new(UuidResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -97,6 +99,16 @@ func (c *domainService) Delete(ctx context.Context, in *DomainDeleteRequest, opt
 func (c *domainService) List(ctx context.Context, in *ListRequest, opts ...client.CallOption) (*DomainListResponse, error) {
 	req := c.c.NewRequest(c.name, "Domain.List", in)
 	out := new(DomainListResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *domainService) Get(ctx context.Context, in *DomainGetRequest, opts ...client.CallOption) (*DomainGetResponse, error) {
+	req := c.c.NewRequest(c.name, "Domain.Get", in)
+	out := new(DomainGetResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -138,13 +150,15 @@ func (c *domainService) Execute(ctx context.Context, in *DomainExecuteRequest, o
 
 type DomainHandler interface {
 	// 创建
-	Create(context.Context, *DomainCreateRequest, *BlankResponse) error
+	Create(context.Context, *DomainCreateRequest, *UuidResponse) error
 	// 更新
-	Update(context.Context, *DomainUpdateRequest, *BlankResponse) error
+	Update(context.Context, *DomainUpdateRequest, *UuidResponse) error
 	// 删除
-	Delete(context.Context, *DomainDeleteRequest, *BlankResponse) error
+	Delete(context.Context, *DomainDeleteRequest, *UuidResponse) error
 	// 列举
 	List(context.Context, *ListRequest, *DomainListResponse) error
+	// 获取
+	Get(context.Context, *DomainGetRequest, *DomainGetResponse) error
 	// 精确查找一个域
 	Find(context.Context, *DomainFindRequest, *DomainFindResponse) error
 	// 模糊查找域
@@ -155,10 +169,11 @@ type DomainHandler interface {
 
 func RegisterDomainHandler(s server.Server, hdlr DomainHandler, opts ...server.HandlerOption) error {
 	type domain interface {
-		Create(ctx context.Context, in *DomainCreateRequest, out *BlankResponse) error
-		Update(ctx context.Context, in *DomainUpdateRequest, out *BlankResponse) error
-		Delete(ctx context.Context, in *DomainDeleteRequest, out *BlankResponse) error
+		Create(ctx context.Context, in *DomainCreateRequest, out *UuidResponse) error
+		Update(ctx context.Context, in *DomainUpdateRequest, out *UuidResponse) error
+		Delete(ctx context.Context, in *DomainDeleteRequest, out *UuidResponse) error
 		List(ctx context.Context, in *ListRequest, out *DomainListResponse) error
+		Get(ctx context.Context, in *DomainGetRequest, out *DomainGetResponse) error
 		Find(ctx context.Context, in *DomainFindRequest, out *DomainFindResponse) error
 		Search(ctx context.Context, in *DomainSearchRequest, out *DomainSearchResponse) error
 		Execute(ctx context.Context, in *DomainExecuteRequest, out *BlankResponse) error
@@ -174,20 +189,24 @@ type domainHandler struct {
 	DomainHandler
 }
 
-func (h *domainHandler) Create(ctx context.Context, in *DomainCreateRequest, out *BlankResponse) error {
+func (h *domainHandler) Create(ctx context.Context, in *DomainCreateRequest, out *UuidResponse) error {
 	return h.DomainHandler.Create(ctx, in, out)
 }
 
-func (h *domainHandler) Update(ctx context.Context, in *DomainUpdateRequest, out *BlankResponse) error {
+func (h *domainHandler) Update(ctx context.Context, in *DomainUpdateRequest, out *UuidResponse) error {
 	return h.DomainHandler.Update(ctx, in, out)
 }
 
-func (h *domainHandler) Delete(ctx context.Context, in *DomainDeleteRequest, out *BlankResponse) error {
+func (h *domainHandler) Delete(ctx context.Context, in *DomainDeleteRequest, out *UuidResponse) error {
 	return h.DomainHandler.Delete(ctx, in, out)
 }
 
 func (h *domainHandler) List(ctx context.Context, in *ListRequest, out *DomainListResponse) error {
 	return h.DomainHandler.List(ctx, in, out)
+}
+
+func (h *domainHandler) Get(ctx context.Context, in *DomainGetRequest, out *DomainGetResponse) error {
+	return h.DomainHandler.Get(ctx, in, out)
 }
 
 func (h *domainHandler) Find(ctx context.Context, in *DomainFindRequest, out *DomainFindResponse) error {

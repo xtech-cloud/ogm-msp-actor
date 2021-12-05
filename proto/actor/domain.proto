@@ -9,13 +9,15 @@ option go_package = "proto/actor;actor";
 service Domain
 {
     // 创建
-    rpc Create(DomainCreateRequest) returns (BlankResponse) { }
+    rpc Create(DomainCreateRequest) returns (UuidResponse) { }
     // 更新
-    rpc Update(DomainUpdateRequest) returns (BlankResponse) { }
+    rpc Update(DomainUpdateRequest) returns (UuidResponse) { }
     // 删除
-    rpc Delete(DomainDeleteRequest) returns (BlankResponse) { }
+    rpc Delete(DomainDeleteRequest) returns (UuidResponse) { }
     // 列举
     rpc List(ListRequest) returns (DomainListResponse) { }
+    // 获取
+    rpc Get(DomainGetRequest) returns (DomainGetResponse) { }
     // 精确查找一个域
     rpc Find(DomainFindRequest) returns (DomainFindResponse) { }
     // 模糊查找域
@@ -49,6 +51,19 @@ message DomainListResponse
     Status status = 1;                // 状态
     int64 total = 2;                  // 总数
     repeated DomainEntity domain = 3; //域实体
+}
+
+// 获取的请求
+message DomainGetRequest
+{
+    string uuid = 1; // 域的uuid
+}
+
+// 获取的回复
+message DomainGetResponse
+{
+    Status status = 1;       // 状态
+    DomainEntity domain = 2; //域实体
 }
 
 // 查找的请求

@@ -9,13 +9,13 @@ option go_package = "proto/actor;actor";
 service Application
 {
     // 添加
-    rpc Add(ApplicationAddRequest) returns (BlankResponse) { }
+    rpc Add(ApplicationAddRequest) returns (UuidResponse) { }
     // 移除
-    rpc Remove(ApplicationRemoveRequest) returns (BlankResponse) { }
+    rpc Remove(ApplicationRemoveRequest) returns (UuidResponse) { }
     // 列举
     rpc List(ApplicationListRequest) returns (ApplicationListResponse) { }
     // 更新
-    rpc Update(ApplicationUpdateRequest) returns (BlankResponse) { }
+    rpc Update(ApplicationUpdateRequest) returns (UuidResponse) { }
 }
 
 // 添加的请求

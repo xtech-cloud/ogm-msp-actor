@@ -42,6 +42,8 @@ type ApplicationService interface {
 	Remove(ctx context.Context, in *ApplicationRemoveRequest, opts ...client.CallOption) (*UuidResponse, error)
 	// 列举
 	List(ctx context.Context, in *ApplicationListRequest, opts ...client.CallOption) (*ApplicationListResponse, error)
+	// 获取
+	Get(ctx context.Context, in *ApplicationGetRequest, opts ...client.CallOption) (*ApplicationGetResponse, error)
 	// 更新
 	Update(ctx context.Context, in *ApplicationUpdateRequest, opts ...client.CallOption) (*UuidResponse, error)
 }
@@ -88,6 +90,16 @@ func (c *applicationService) List(ctx context.Context, in *ApplicationListReques
 	return out, nil
 }
 
+func (c *applicationService) Get(ctx context.Context, in *ApplicationGetRequest, opts ...client.CallOption) (*ApplicationGetResponse, error) {
+	req := c.c.NewRequest(c.name, "Application.Get", in)
+	out := new(ApplicationGetResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *applicationService) Update(ctx context.Context, in *ApplicationUpdateRequest, opts ...client.CallOption) (*UuidResponse, error) {
 	req := c.c.NewRequest(c.name, "Application.Update", in)
 	out := new(UuidResponse)
@@ -107,6 +119,8 @@ type ApplicationHandler interface {
 	Remove(context.Context, *ApplicationRemoveRequest, *UuidResponse) error
 	// 列举
 	List(context.Context, *ApplicationListRequest, *ApplicationListResponse) error
+	// 获取
+	Get(context.Context, *ApplicationGetRequest, *ApplicationGetResponse) error
 	// 更新
 	Update(context.Context, *ApplicationUpdateRequest, *UuidResponse) error
 }
@@ -116,6 +130,7 @@ func RegisterApplicationHandler(s server.Server, hdlr ApplicationHandler, opts .
 		Add(ctx context.Context, in *ApplicationAddRequest, out *UuidResponse) error
 		Remove(ctx context.Context, in *ApplicationRemoveRequest, out *UuidResponse) error
 		List(ctx context.Context, in *ApplicationListRequest, out *ApplicationListResponse) error
+		Get(ctx context.Context, in *ApplicationGetRequest, out *ApplicationGetResponse) error
 		Update(ctx context.Context, in *ApplicationUpdateRequest, out *UuidResponse) error
 	}
 	type Application struct {
@@ -139,6 +154,10 @@ func (h *applicationHandler) Remove(ctx context.Context, in *ApplicationRemoveRe
 
 func (h *applicationHandler) List(ctx context.Context, in *ApplicationListRequest, out *ApplicationListResponse) error {
 	return h.ApplicationHandler.List(ctx, in, out)
+}
+
+func (h *applicationHandler) Get(ctx context.Context, in *ApplicationGetRequest, out *ApplicationGetResponse) error {
+	return h.ApplicationHandler.Get(ctx, in, out)
 }
 
 func (h *applicationHandler) Update(ctx context.Context, in *ApplicationUpdateRequest, out *UuidResponse) error {

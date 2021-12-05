@@ -14,6 +14,8 @@ service Application
     rpc Remove(ApplicationRemoveRequest) returns (UuidResponse) { }
     // 列举
     rpc List(ApplicationListRequest) returns (ApplicationListResponse) { }
+    // 获取
+    rpc Get(ApplicationGetRequest) returns (ApplicationGetResponse) { }
     // 更新
     rpc Update(ApplicationUpdateRequest) returns (UuidResponse) { }
 }
@@ -46,6 +48,18 @@ message ApplicationUpdateRequest
 message ApplicationRemoveRequest
 {
     string uuid = 1; // 应用的uuid
+}
+
+// 获取的请求
+message ApplicationGetRequest
+{
+    string uuid = 1; // 应用的uuid
+}
+
+// 获取的回复
+message ApplicationGetResponse
+{
+    ApplicationEntity application = 1; // 应用实体
 }
 
 // 列举的请求

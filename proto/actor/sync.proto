@@ -52,6 +52,7 @@ message SyncPullResponse
     map<string, string> alias = 3;    // 设备别名
     map<string, string> property = 4; // 属性
     map<string, int32> healthy = 5;   // 健康值
+    map<string, string> custom = 10;  // 自定义数据(base64编码)
 }
 
 // 上传的请求

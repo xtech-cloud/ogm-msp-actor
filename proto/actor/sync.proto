@@ -24,6 +24,7 @@ message SyncPushRequest
     map<string, string> upProperty = 3; // 上行属性（提交给服务的属性）
     repeated string downProperty = 4;   // 下行属性（希望服务在回复时包含的属性）
     repeated string task = 5;           // 完成的任务
+    string custom = 10;                 // 自定义数据(base64编码)
 }
 
 // 推送的回复
